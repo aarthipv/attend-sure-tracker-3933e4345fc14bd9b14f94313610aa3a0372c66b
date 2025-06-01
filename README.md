@@ -75,14 +75,6 @@ For SSH deployment, also add:
 - `SSH_USER`: SSH username
 - `SSH_HOST`: SSH host address
 
-### Monitoring
-
-- Prometheus is available at http://localhost:9090
-- Grafana is available at http://localhost:3000
-
-Initial Grafana login:
-- Username: admin
-- Password: admin
 
 ## Common Commands
 
