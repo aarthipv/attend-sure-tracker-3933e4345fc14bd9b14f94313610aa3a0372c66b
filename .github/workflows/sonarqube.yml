@@ -26,7 +26,8 @@ jobs:
             -v "${{ github.workspace }}:/usr/src" \
             sonarsource/sonar-scanner-cli:5 \
             -Dsonar.projectKey=attend_sure \
+            -Dsonar.organization=aarthipv \
             -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io\
+            -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -X
