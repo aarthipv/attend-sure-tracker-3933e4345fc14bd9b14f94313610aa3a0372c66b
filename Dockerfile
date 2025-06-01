@@ -1,15 +1,27 @@
-# Stage 1: Build
-FROM node:18 AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+# Backend-Only Dockerfile
+FROM node:18-alpine
 
-# Stage 2: Production
-FROM node:18
 WORKDIR /app
-COPY --from=builder /app/dist /app/build  
-COPY --from=builder /app/node_modules /app/node_modules
-COPY --from=builder /app/package.json /app/package.json
+
+# Copy server package files
+COPY server/package*.json ./
+
+# Install production dependencies
+RUN npm install --production
+
+# Copy server source code
+COPY server/ ./
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=80
+
+# Expose port
+EXPOSE 80
+
+# Add health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:80/health || exit 1
+
+# Start the server
 CMD ["npm", "start"]
