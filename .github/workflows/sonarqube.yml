@@ -8,29 +8,25 @@ on:
   workflow_dispatch:
 
 permissions:
-  pull-requests: read  # Allows SonarQube to decorate PRs with analysis results
+  pull-requests: read
 
 jobs:
-  Analysis:
+  sonar:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Analyze with SonarQube
-        uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          args: >
+      - name: SonarQube Scan using Docker
+        run: |
+          docker run --rm \
+            -e SONAR_HOST_URL=https://sonarcloud.io \
+            -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
+            -v "${{ github.workspace }}:/usr/src" \
+            sonarsource/sonar-scanner-cli:5 \
+            -Dsonar.projectKey=attend_sure \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=https://sonarcloud.io\
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -X
-            -Dsonar.projectKey=attend_sure
