@@ -28,14 +28,3 @@ jobs:
         file: ./server/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/attend-sure-backend:latest
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: attend-sure
-        images: ${{ secrets.DOCKER_USERNAME }}/attend-sure-backend:latest
