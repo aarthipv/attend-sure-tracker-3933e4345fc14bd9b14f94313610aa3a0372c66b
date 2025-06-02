@@ -51,9 +51,6 @@ jobs:
           npm install
           npm install cypress@13.6.0 eslint-plugin-cypress@2.15.1 --save-dev
 
-      - name: Cypress Run
-        uses: cypress-io/github-action@v6.9.2
-        with:
-          working-directory: client
+
           start: npm run dev
           wait-on: 'http://localhost:5173'
