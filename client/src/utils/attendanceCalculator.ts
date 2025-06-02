@@ -1,4 +1,3 @@
-
 import { Course, AttendanceCalculation } from "../types/attendance";
 
 export const calculateAttendance = (course: Course): AttendanceCalculation => {
@@ -14,22 +13,22 @@ export const calculateAttendance = (course: Course): AttendanceCalculation => {
   // Remaining classes
   const classesRemaining = Math.max(0, total - (attended + missed));
   
-  // Calculate how many classes can be missed while maintaining 75% attendance
-  let canMissFor75 = 0;
-  if (classesRemaining > 0) {
-    // Formula: (attended + remaining) * 0.75 = attended + (missed + X)
-    // Solving for X (additional classes that can be missed)
-    canMissFor75 = Math.floor((attended + classesRemaining) * 0.75 - attended - missed);
-    canMissFor75 = Math.max(0, canMissFor75);
+  // Helper to calculate how many more classes can be missed
+  function calculateCanMiss(attended: number, missed: number, remaining: number, threshold: number) {
+    let canMiss = 0;
+    for (let x = 0; x <= remaining; x++) {
+      const percent = attended / (attended + missed + x) * 100;
+      if (percent >= threshold * 100) {
+        canMiss = x;
+      } else {
+        break;
+      }
+    }
+    return canMiss;
   }
   
-  // Calculate how many classes can be missed while maintaining 80% attendance
-  let canMissFor80 = 0;
-  if (classesRemaining > 0) {
-    // Similar formula but with 80%
-    canMissFor80 = Math.floor((attended + classesRemaining) * 0.80 - attended - missed);
-    canMissFor80 = Math.max(0, canMissFor80);
-  }
+  const canMissFor75 = calculateCanMiss(attended, missed, classesRemaining, 0.75);
+  const canMissFor80 = calculateCanMiss(attended, missed, classesRemaining, 0.80);
   
   return {
     currentAttendance,
