@@ -31,27 +31,3 @@ jobs:
 
     - name: TruffleHog OSS
       uses: trufflesecurity/trufflehog@v3.88.35
-<<<<<<< HEAD
-
-  cypress:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: client/package-lock.json
-
-      - name: Install Dependencies
-        run: |
-          cd client
-          npm install
-          npm install cypress@13.6.0 eslint-plugin-cypress@2.15.1 --save-dev
-
-
-          start: npm run dev
-
