@@ -1,4 +1,4 @@
-name: Docker Build and Push, TruffleHog OSS, Cypress.io
+name: Docker Build and Push, TruffleHog OSS
 
 on:
   push:
@@ -31,6 +31,7 @@ jobs:
 
     - name: TruffleHog OSS
       uses: trufflesecurity/trufflehog@v3.88.35
+<<<<<<< HEAD
 
   cypress:
     runs-on: ubuntu-latest
@@ -54,3 +55,5 @@ jobs:
 
           start: npm run dev
           wait-on: 'http://localhost:5173'
+=======
+>>>>>>> 6144484 (removed cypruss)
