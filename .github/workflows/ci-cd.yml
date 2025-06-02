@@ -28,3 +28,6 @@ jobs:
         file: ./server/Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/attend-sure-backend:latest
+    - name: TruffleHog OSS
+      uses: trufflesecurity/trufflehog@v3.88.35
+      
