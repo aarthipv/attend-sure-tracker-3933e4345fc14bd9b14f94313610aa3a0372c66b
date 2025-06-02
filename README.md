@@ -6,8 +6,6 @@ This repository contains a CI/CD pipeline setup for the Student Attendance Track
 ## Components
 
 - **Docker**: Used for containerization of the application
-- **Prometheus**: For monitoring and metrics collection
-- **Grafana**: For metrics visualization
 - **GitHub Actions**: For CI/CD workflow
 
 ## Setup Instructions
