@@ -1,4 +1,3 @@
-
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
@@ -6,8 +5,7 @@ global:
 scrape_configs:
   - job_name: 'app_metrics'
     static_configs:
-      - targets: ['app:8080']
-    metrics_path: '/metrics'
+      - targets: ['host.docker.internal:5001']
 
   - job_name: 'prometheus'
     static_configs:
