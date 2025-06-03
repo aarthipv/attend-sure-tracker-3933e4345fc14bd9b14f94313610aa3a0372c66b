@@ -1,6 +1,19 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+interface IUser {
+  email: string;
+  password: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+interface IUserModel extends mongoose.Model<IUser> {
+  // Add any static methods here if needed
+}
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -40,4 +53,4 @@ userSchema.methods.comparePassword = async function(candidatePassword: string) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const User = mongoose.model('User', userSchema); 
+export const User = mongoose.model<IUser, IUserModel>('User', userSchema); 
