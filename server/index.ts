@@ -27,7 +27,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/attend-sure')
+mongoose.connect('mongodb+srv://anirudhanirudh982:i5bLufCTgYE77UB3@cluster0.j2govnr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
