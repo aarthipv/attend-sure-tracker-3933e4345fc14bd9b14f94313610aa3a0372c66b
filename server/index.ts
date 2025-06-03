@@ -6,6 +6,7 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { User } from './models/User.js';
+import client from 'prom-client';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,6 +14,15 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5001;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+
+// Enable default metrics
+client.collectDefaultMetrics();
+
+// Expose /metrics endpoint
+app.get('/metrics', async (req, res) => {
+  res.set('Content-Type', client.register.contentType);
+  res.end(await client.register.metrics());
+});
 
 // Add CSP headers middleware
 app.use((req, res, next) => {
@@ -99,4 +109,4 @@ app.post('/api/auth/login', async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-}); 
+});

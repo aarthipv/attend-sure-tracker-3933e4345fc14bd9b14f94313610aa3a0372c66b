@@ -5,7 +5,8 @@ global:
 scrape_configs:
   - job_name: 'app_metrics'
     static_configs:
-      - targets: ['host.docker.internal:5001']
+      - targets: ['my-backend-95433363736.us-central1.run.app']
+    scheme: https
 
   - job_name: 'prometheus'
     static_configs:
